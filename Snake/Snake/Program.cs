@@ -25,14 +25,18 @@ namespace Snake
             Point p = new Point(4, 5, '*');
             Snake snek = new Snake(p, 4, Direction.RIGHT);
             snek.Draw();
-            snek.Move();
-            Thread.Sleep(300);
-            snek.Move();
-            Thread.Sleep(300);
-            snek.Move();
 
+            while (true)
+            {
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey();
+                    snek.HandleKey(key.Key);
+                }
+                Thread.Sleep(100);
+                snek.Move();
+            }
 
-            Console.ReadKey();
         }     
     }
 }
