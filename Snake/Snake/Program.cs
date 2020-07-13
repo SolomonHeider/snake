@@ -11,6 +11,7 @@ namespace Snake
     {
         static void Main(string[] args)
         {
+
 			//Console.SetBufferSize(80, 25);
 			Walls walls = new Walls(80, 25);
 			walls.Draw();
@@ -22,8 +23,10 @@ namespace Snake
 			Point p = new Point(4, 5, '*');
 			Snake snek = new Snake(p, 4, Direction.RIGHT);
 			snek.Draw();
-			 
-			 while (true)
+
+			WriteScore(snek, 40, 26);
+
+			while (true)
 			 {
 				if(walls.IsHit(snek) || snek.IsHitTail())
 				{
@@ -33,6 +36,7 @@ namespace Snake
 				{
 					food = foodCreator.CreateFood();
 					food.Draw();
+					WriteScore(snek, 40, 26);
 				}
 				else
 				{
@@ -64,8 +68,7 @@ namespace Snake
 			Console.SetCursorPosition(xOffset, yOffset++);
 			WriteText("=================", xOffset, yOffset++);
 			WriteText("G A M E  O V E R", xOffset + 1, yOffset++);
-			WriteText("S C O R E :", xOffset + 2, yOffset++);
-			WriteText(snake.foodCount.ToString(), xOffset + 2, yOffset++);
+			WriteScore(snake, xOffset + 2, yOffset++);
 			WriteText("=================", xOffset, yOffset++);
 		}
 
@@ -73,6 +76,12 @@ namespace Snake
 		{
 			Console.SetCursorPosition(xOffset, yOffset);
 			Console.WriteLine(text);
+		}
+
+		static void WriteScore(Snake snake, int xOffset, int yOffset)
+		{
+			Console.SetCursorPosition(xOffset, yOffset);
+			Console.Write("SCORE: " + snake.foodCount);
 		}
 	}
 }
