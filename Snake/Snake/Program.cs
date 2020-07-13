@@ -39,7 +39,6 @@ namespace Snake
 					snek.Move();
 				}
 
-
 				Thread.Sleep(100);
 
 				 if (Console.KeyAvailable)
@@ -48,7 +47,7 @@ namespace Snake
 					 snek.HandleKey(key.Key);
 				 }
 			 }
-			WriteGameOver();
+			WriteGameOver(snek);
 			Console.ReadLine();
 
 		}
@@ -57,7 +56,7 @@ namespace Snake
 			figure.Draw();
 		}
 
-		static void WriteGameOver()
+		static void WriteGameOver(Snake snake)
 		{
 			int xOffset = 25;
 			int yOffset = 8;
@@ -65,6 +64,8 @@ namespace Snake
 			Console.SetCursorPosition(xOffset, yOffset++);
 			WriteText("=================", xOffset, yOffset++);
 			WriteText("G A M E  O V E R", xOffset + 1, yOffset++);
+			WriteText("S C O R E :", xOffset + 2, yOffset++);
+			WriteText(snake.foodCount.ToString(), xOffset + 2, yOffset++);
 			WriteText("=================", xOffset, yOffset++);
 		}
 
