@@ -11,66 +11,43 @@ namespace Snake
     {
         static void Main(string[] args)
         {
+			//Console.SetBufferSize(80, 25);
+			Walls walls = new Walls(80, 25);
+			walls.Draw();
 
-			VerticalLine vl = new VerticalLine(0, 10, 5, '%');
-			Draw(vl);
+			FoodCreator foodCreator = new FoodCreator(80, 25, '$');
+			Point food = foodCreator.CreateFood();
+			food.Draw();
 
 			Point p = new Point(4, 5, '*');
-			Figure fSnake = new Snake(p, 4, Direction.RIGHT);
-			Draw(fSnake);
-			Snake snake = (Snake)fSnake;
-
-			HorizontalLine hl = new HorizontalLine(0, 5, 6, '&');
-
-			List<Figure> figures = new List<Figure>();
-			figures.Add(fSnake);
-			figures.Add(vl);
-			figures.Add(hl);
-
-			foreach (var f in figures)
-			{
-				f.Draw();
-			}
-			Console.Read();
-			//Console.SetBufferSize(80, 25);
-
-			/* HorizontalLine upLine = new HorizontalLine(0,78,0,'+');
-			 HorizontalLine downLine = new HorizontalLine(0, 78, 24, '+');
-			 VerticalLine leftLine = new VerticalLine(0, 24, 0, '+');
-			 VerticalLine rightLine = new VerticalLine(0, 24, 78, '+');
-			 upLine.Draw();
-			 downLine.Draw();
-			 leftLine.Draw();
-			 rightLine.Draw();
-
-			 Point p = new Point(4, 5, '*');
-			 Snake snek = new Snake(p, 4, Direction.RIGHT);
-			 snek.Draw();
-
-			 FoodCreator foodCreator = new FoodCreator(80, 25, '$');
-			 Point food = foodCreator.CreateFood();
-			 food.Draw();
-
+			Snake snek = new Snake(p, 4, Direction.RIGHT);
+			snek.Draw();
+			 
 			 while (true)
 			 {
-				 if (snek.Eat(food))
-				 {
-					 food = foodCreator.CreateFood();
-					 food.Draw();
-				 }
-				 else
-				 {
-					 snek.Move();
-				 }
+				if(walls.IsHit(snek) || snek.IsHitTail())
+				{
+					break;
+				}
+				if (snek.Eat(food))
+				{
+					food = foodCreator.CreateFood();
+					food.Draw();
+				}
+				else
+				{
+					snek.Move();
+				}
 
-				 Thread.Sleep(100);
+
+				Thread.Sleep(100);
 
 				 if (Console.KeyAvailable)
 				 {
 					 ConsoleKeyInfo key = Console.ReadKey();
 					 snek.HandleKey(key.Key);
 				 }
-			 }*/
+			 }
 
 		}
 		static void Draw(Figure figure)
